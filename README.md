@@ -1,4 +1,4 @@
-# 🏗️ Days of Solidity: Phase:one:
+# 🏗️ 30 Days of Solidity
 
 
 ## Phase :one:
