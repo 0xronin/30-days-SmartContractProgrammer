@@ -114,7 +114,7 @@ contract ForAndWhileLoops {
 - In solidity we usually try to use as few loop as possible, since more loops translates to higher gas cost for execution of function.
 
 
-<div align=center><a href="https://github.com/0xronin/My-Blockchain-Developement-Journey/tree/main/Day30-FOCUS_SOLIDITY/Day02"><< Day 2
-<a href="https://github.com/0xronin/My-Blockchain-Developement-Journey/tree/main/Day30-FOCUS_SOLIDITY/Day04"> Day 4 >></div>
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day02"><< Day 2
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day04"> Day 4 >></div>
 
 
