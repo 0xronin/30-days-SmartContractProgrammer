@@ -10,6 +10,4 @@ This folder will have day-wise
 - Solidity Codes
 - Resources for further reading
 
-
-
-
+### :rocket:[START](https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day01)
