@@ -126,4 +126,4 @@ contract FunctionIntro {
 - ```pure``` means this function is read only, it does not write anything to the blockchain.
 - ```returns()``` declares the type of output returned which is written inside the paranthesis.
 
-<div align=center><a href="https://github.com/0xronin/My-Blockchain-Developement-Journey/tree/main/Day30-FOCUS_SOLIDITY/Day02">Day 2 >></a></div>
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day02">Day 2 >></a></div>
