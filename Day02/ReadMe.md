@@ -136,5 +136,5 @@ run the program on [Remix IDE](https://remix.ethereum.org/) to check your code.
 
 Congratulations :tada: you have created a Counter dapp!
 
-<div align=center><a href="https://github.com/0xronin/My-Blockchain-Developement-Journey/tree/main/Day30-FOCUS_SOLIDITY/Day01"><< Day 1
-<a href="https://github.com/0xronin/My-Blockchain-Developement-Journey/tree/main/Day30-FOCUS_SOLIDITY/Day03"> Day 3 >></div>
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day01"><< Day 1
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day03"> Day 3 >></div>
