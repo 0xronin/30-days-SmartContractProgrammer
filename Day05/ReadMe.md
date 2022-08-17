@@ -23,9 +23,9 @@ contract Constructor {
 - We define by using the keyword ```constructor``` and inside the parathesis we can put in the inputs, here it is ```_x```.
 - Inside the curly braces of a constructor, we can write any code just like a regular function.
 - We initailize the state variable owner to the address that deployed this contract. We do that by typing ```owner = msg.sender```.
-- ```msg.sender``` will be the account that deployed this contract, here we are saying that, set the owner to the account that deployed this constract.
+- ```msg.sender``` will be the account that deployed this contract, here we are saying that, set the owner to the account that deployed this contract.
 - We also set the state variable ```x``` to ```_x``` from the input.
-- Unlike a regular function that can be called multiple times, the contrctor can be called only once when we deploy the contract.
+- Unlike a regular function that can be called multiple times, the constructor can be called only once when we deploy the contract.
 
 ## :star: Building Ownership App
 This app will be using some of the concepts we have learned so far.
