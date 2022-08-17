@@ -70,12 +70,14 @@ contract Ownable{
 - If the msg.sender is the owner then we move on and execute the rest of the code, here we type ```_;``` to move to the function which called the modifier.
 - We write the function to set a new owner, only the owner will be able to call this function.
 - ```setOwner()``` function will take single input of the new owner which we want to set, ```address  _newAddress```, function will be external meaning we will be able to call this fucntion and attach the ```onlyOwner``` modifier, which makes this function callable by only the owner of this contract and set the new owner.
-- We don't want the new owner to be zero address so we validate the input by typing ```require(_newOwner != address(0)``` and if it a zero address we throw a message saying ```Invalid Address!```.
+- We don't want the new owner to be zero address so we validate the input by typing ```require(_newOwner != address(0)``` and if it a zero address we throw a message saying ```"Invalid Address!"```.
 - Now we know that the caller of this function is the owner and the new address is not a zero address, so we will move on and execute the code inside the function.
-- We set a new owner by typing ```owner = _newOwner``` which is the input address passed by the current owner, making it the new owner.
+- We set the new owner by typing ```owner = _newOwner``` which is the input address passed by the current owner, making it the new owner.
 - We also have examples of functions which only the owner can call, and the function that anyone can call. It's really useful while writing smart contracts.
 
+### :tada: Congratulations! You have created a smart contract to transfer the ownership of a contract, check it on Remix on your own.
 
+## Function Outputs
 
 
 
