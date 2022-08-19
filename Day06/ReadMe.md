@@ -1,0 +1,3 @@
+# Day :six:
+
+## Function Outputs
