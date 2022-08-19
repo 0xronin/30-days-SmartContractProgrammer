@@ -77,7 +77,8 @@ contract Ownable{
 
 ### :tada: Congratulations! You have created a smart contract to transfer the ownership of a contract, check it on Remix on your own.
 
-## Function Outputs
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day04"><< Day 4
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day06"> Day 6 >></div>
 
 
 
