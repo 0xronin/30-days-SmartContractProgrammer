@@ -77,6 +77,38 @@ contract Ownable{
 
 ### :tada: Congratulations! You have created a smart contract to transfer the ownership of a contract, check it on Remix on your own.
 
+## Function Outputs
+
+Functions in solidity can return multiple outputs, it can be 
+1. Named outputs
+2. Destructing Assignments: If you we to capture the output in another function then we use destructuring assignments.
+
+```solidity
+contract FunctionOutput {
+
+  fucntion returnMany() public pure returns(uint, bool){
+    return (1, true);
+  }
+  
+  function named() public pure returns(uint x, bool b){
+    x = 1;
+    b = true;
+  }
+  
+  function destructuringAssignments() public pure {
+  (uint x, bool b) = returnMany();
+  (, bool _b) = returnMany();
+  }
+}
+
+```
+
+- the function ```returnMany()``` returns multiple outputs. There is no inputs, we use ```public``` instead of ```external``` because we will be using this function in another function inside this contract. This function is read only so we are using ```pure```.
+- the ```returns( )``` is how we declare this function will return multiple outputs. Inside the paranthesis we declare the types of outputs. Inside the function body we will match the return type.
+- We can also name the outputs, by declaring the name after the data type ```returns(uint x, bool b)```. When we have named outputs we can implicitly return the outputs. We can assign the value to the named output. Writing functions like this will save us a little bit of gas. This is because there is one less copying to do.
+- Destructring assignments is how we capture the outputs in a function. Inside the ```destrcturingAssignment()``` we call the ```returnMany()``` function. To capture the output of returnMany() as a varaible for the destructuringAssignment() function, we use paranthesis and inside the paranthesis we declare the variables that we want to capture ```(uint x, bool b) = returnMany();```.
+- If we only need the second output, we can omit the first variable like this ```(, bool _b) = returnMany();```, name _b is used to avoid the name conflict.
+
 <div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day04"><< Day 4
 <a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day06"> Day 6 >></div>
 
