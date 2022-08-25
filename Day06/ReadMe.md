@@ -95,5 +95,42 @@ contract ArrayShift {
 - we shift all the elements to the right of the element we want to remove to the left. ```arr[i] = arr[i+1]```
 - after shifting all the elements over to the left we will have an array looking like this ```[1,2,4,5,5]```
 - finally we pop ```arr.pop()``` the last element and get the desired array ```[1,2,4,5]```
+- we check our algo by running the function ```test()```
 
+### Array Remove An Element By Replacing Last
+Shifting is not an gas-efficient way to remove an element from an array, the idea here is to shuffle the elements by replacing the element we want to remove with the last element. However the order of the elements in the array is not reserved when using this menthod.
+
+```solidity
+contract ArrayReplaceLast {
+  uint[] public arr;
+  
+  // [1,2,3,4] --> remove(1) --> [1,4,3]
+  // [1,4,3] --> remove(2) --> [1,4]
+  
+  function remove(uint i) public {
+    arr[i] = arr[arr.length - 1];
+    arr.pop();
+  }
+  
+  function test() external {
+    arr = [1,2,3,4];
+    
+    remove(1); // [1,4,3]
+    assert(arr.length == 3);
+    assert(arr[0] == 1);
+    assert(arr[1] == 4);
+    assert(arr[2] == 3);
+    
+    remove(2);
+    // [1,4]
+    assert(arr.length == 2);
+    assert(arr[0] == 1);
+    assert(arr[1] == 4);
+  }
+}
+```
+
+- the element we want to remove is replaced with the last element ```arr[i] = arr[arr.length - 1]```
+- finally we pop the last element ```arr.pop()```
+- we check our algo by running the function ```test()```
 
