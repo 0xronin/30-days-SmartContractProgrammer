@@ -134,3 +134,6 @@ contract ArrayReplaceLast {
 - finally we pop the last element ```arr.pop()```
 - we check our algo by running the function ```test()```
 
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day05"><< Day 5
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day07"> Day 7 >></div>
+
