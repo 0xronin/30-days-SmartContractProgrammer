@@ -34,6 +34,54 @@ contract Mapping {
 - to make ```msg.sender``` isFriend of this contract ```Mapping``` we write ```isFriend[msg.sender][address(this)] = true```
 
 ### Iterable Mapping 
-We cannot get the size of a Mapping and cannot iterate through a mapping to get all the elements of the mapping, UNLESS we internally keep track of all of the keys in the mapping. 
+We cannot get the size of a Mapping and cannot iterate through a mapping to get all the elements of the mapping, unless we internally keep track of all of the keys in the mapping. 
+
+Let's build a mapping we can iterate through. We can get the size of the mapping, and run a for loop to get elements in the mapping.
+
+```solidity
+
+contract IterableMapping {
+  mapping(address => uint) public balances;
+  mapping(address => bool) public inserted;
+  address[] public keys;
+  
+  function set(address _key, uint _val) external {
+    balances[_key] = _val;
+    
+    if(!inserted[_key]) {
+      inserted[_key] = true;
+      keys.push(_key);
+    }
+  }
+  
+  function getSize() external view returns(uint) {
+    return keys.length;
+  }
+  
+  function first() external view returns(uint) {
+    return balances[keys[0]];
+  }
+  
+  function last() external view returns(uint) {
+    return balances[keys[keys.length - 1]];
+  }
+  
+  function get(uint _i) external view returns(uint) {
+    return balances[keys[_i]];
+  }
+}
+```
+
+- we have a mapping called ```balances``` from address to uint which represents the balance of an address
+- to get the size of the mapping and to iterate through it we need some new data, we need a new mapping that keeps track of whether a key is inserted or not ```mapping(address => bool) public inserted```
+- to keep track of all the keys we inserted we create an array of type address ```address[] public keys```
+- to set the value in the mappings we create a ```set()``` function where we update the balances mapping ```balances[_key] = _val```
+- to keep track whether this key is newly inserted or not ```if(!inserted[_key])``` and if inserted ```inserted[_key] = true``` we append the key to the keys array ```keys.push(_key)```, doing so we will have an array or keys which we can further use to get all the values stored in the balances mapping through the functions ```first(), last(), getSize(), get(uint _i)```.
+
+
+> Public and external differs in terms of gas usage. The former use more than the latter when used with large arrays of data. This is due to the fact that Solidity copies arguments to memory on a public function while external read from calldata which is cheaper than memory allocation.
+
+## Struct
+Struct allows us to group data together.
 
 
