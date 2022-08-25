@@ -44,3 +44,56 @@ contract Array{
 - An array in memory has to be a fixed size. The syntax ```uint[] memory a = new uint[](5)```. An array in memeory named ```a``` is initialized with a fixed size of 5. We can only update a value and get the value from an array in memory.
 - A function can return array as output. The return type is an array of uint and it is memory ```returns(uint[] memory)``` which means we want to copy the state variable ```nums``` into memory and then return it.
 - Returning an array from a function is not recommended, it's reason is to keep the for loop small. The bigger the array, the more gas it will consume, if the array is too big it will use all the gas and function will be unusable.
+
+### Array Remove An Element By Shifting
+
+When we use th ```delete``` to clear element from an array, it does not removes the element but only resets it to it's default value.
+The basic idea of this method is to shift all the elements to the left and pop the last element.
+
+```solidity
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+contract ArrayShift {
+  uint[] public arr;
+  
+  function example() public {
+    arr = [1,2,3];
+    delete arr[1]; // [1,0,3]
+  }
+  
+  // [1,2,3] ... remove 2 --> [1,3,3] --> [1,3]
+  // [1,2,3,4,5,6] ... remove 3 --> [1,2,4,5,6,6] --> [1,2,4,5,6]
+  // [1] ... remove 1 --> [1] --> []
+  
+  function remove(uint _index) public {
+    require(_index < arr.length, "Index out of bound");
+    
+    for (uint i = _index; i< arr.length - 1; i++){
+      arr[i] = arr[i+1];
+    } arr.pop();
+  }
+  
+  function test() external {
+    arr = [1,2,3,4,5];
+    remove(2) // item at index 2; that is 3
+    // [1,2,4,5]
+    assert(arr[0] == 1);
+    assert(arr[1] == 2);
+    assert(arr[2] == 4);
+    assert(arr[3] == 5);
+    assert(arr.length == 4);
+    
+    arr = [1];
+    remove(0); // []
+    assert(arr.length == 0);
+  }
+}
+```
+
+- in the test we have array ```[1,2,3,4,5]``` and we want to remove the element at index(2) that is 3.
+- we shift all the elements to the right of the element we want to remove to the left. ```arr[i] = arr[i+1]```
+- after shifting all the elements over to the left we will have an array looking like this ```[1,2,4,5,5]```
+- finally we pop ```arr.pop()``` the last element and get the desired array ```[1,2,4,5]```
+
+
