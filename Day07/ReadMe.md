@@ -84,4 +84,60 @@ contract IterableMapping {
 ## Struct
 Struct allows us to group data together.
 
+```solidity
+
+contract Structs {
+
+  struct Car {
+    string model;
+    uint year;
+    address owner;
+  }
+  
+  // Initializing Struct
+  Car public car;
+  Car[] public cars;
+  mapping(address => Car[]) public carsByOwner;
+  
+  function examples() external {
+    Car memory toyota = Car("Toyota", 1990, msg.sender);
+    Car memory lambo = Car({year: 1980, model: "Lamborghini", owner: msg.sender});
+    Car memory tesla; // model will be empty string, year will be 0 and owner will be address 0
+    tesla.model = "Tesla";
+    tesla.year = 2010;
+    tesla.owner = msg.sender;
+    
+    cars.push(toyota);
+    cars.push(lambo);
+    cars.push(tesla);
+    
+    cars.push(Car("Ferrari", 2020, msg.sender));
+    
+    Car storage _car = cars[0];
+    _car.year = 1999;
+    delete _car.owner;
+    
+    delete cars[1];
+  }
+
+}
+```
+
+- we have created a struct called ```Car``` and inside we put model, year and owner.
+- we can use struct as a state-variable by calling ```Car public car```, we can create an array of structs by typing ```Car[] public cars```, and we can define a mapping from owner to cars by typing ```mapping (address => Car[]) public carsByOwner```.
+- Initializing: There are three ways to initialize a struct
+    - the first is similar to how we execute a function, by putting all the parameters inside the paranthesis ```Car memory toyota = Car("Toyota", 1990, msg.sender)``` we create a variable with name ```toyota``` of type ```Car```struct inside ```memory``` meaning this variable will only exist while this function is called. The parameters have to be in the order they are declared initially.
+    - another way is to pass key-value pairs inside the paranthesis ```Car memory lambo = Car({year: 1980, model: "Lamborghini", owner: msg.sender})```. The order does not matter.
+    - third way to initialize a struct is to just define it, and the struct will have defalut values ```Car memory tesla```. We can push data in the tesla Car struct ```tesla.model = "Tesla"; tesla.year = 2010; tesla.owner = msg.sender;```
+- after the function is finished executing these structs will be gone because of ```memory```, so we need to put these structs in a state variable so that we are able to get the structs from the smart contract by pushing the structs into the car array ```cars.push(toyota); cars.push(lambo); cars.push(tesla);```.
+- We can also create a struct wihtout having to initialize it as memory and save it as a state-variable, we can directly create a struct and push it immediately into the array by doing the following ```cars.push(Car("Ferrari", 2020, msg.sender))```.
+- getting, updating and deleting from struct is ```Car storage _car = cars[0]; _car.year = 1999; delete _car.owner; delete cars[1];```. We use ```storage``` because we want to update the variable stored inside this smart contract.
+
+
+
+
+
+
+
+
 
