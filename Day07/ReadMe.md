@@ -134,10 +134,5 @@ contract Structs {
 - getting, updating and deleting from struct is ```Car storage _car = cars[0]; _car.year = 1999; delete _car.owner; delete cars[1];```. We use ```storage``` because we want to update the variable stored inside this smart contract.
 
 
-
-
-
-
-
-
-
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day06"><< Day 6
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day08"> Day 8 >></div>
