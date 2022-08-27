@@ -49,3 +49,59 @@ contract Enum {
 - we can reset the value of enum to it's default value as shown in function ```reset()```. The default value of enum is the first choice that is defined inside the curly braces.
 
 ## Storage, Memory and Calldata
+When we use a dynamic data-type as a variable we need to declare its data location.
+* **Storage** means that the variable is a state-variable
+* **Memory** means that the data is loaded on to memory
+* **Calldata** is like memory, except it can only be used for function inputs.
+
+```solidity
+contract DataLocations {
+  struct MyStruct {
+    uint foo;
+    string text;
+  }
+  
+  mapping(address => MyStruct) public myStructs;
+  
+  function examplesMem (uint[] memory y, string memory s) external returns(uint[] memory) {
+    myStructs[msg.sender] = MyStruct({foo: 123, text:"bar"});
+    
+    MyStruct storage myStruct = myStructs[msg.sender];
+    myStruct.text = "foo";
+    
+    MyStruct memory readOnly = myStructs[msg.sender];
+    readOnly.foo = 456;
+    
+    uint[] memory memArr = new uint[](3);
+    memArr[0] = 234;
+    return memArr;
+  }
+  
+  function examplesCalldata (uint[] calldata y, string calldata s) external returns(uint[] memory) {
+    _internal(y);
+    
+    uint[] memory memArr = new uint[](3);
+    memArr[0] = 234;
+    return memArr;
+  }
+  
+  function _internal(uint[] calldata y) private {
+    uint x = y[0];
+  }
+
+}
+```
+
+- here we a struct called ```MyStruct``` and a mapping from address to struct called ```myStructs```
+- we created and inserted ```myStruct[msg.sender] = MyStruct({foo: 123, text:"bar"})``` into mapping
+- to modify a struct, we declare MyStruct followed by ```storage``` and then declaring the variable name ```MyStruct storage myStruct = myStructs[msg.sender]```, we modify the myStruct text by typing ```myStruct.text = "foo"```
+> we declare a struct as storage when we want to modify the struct
+- if we wanted to just read my struct, we change the keyword from storage to memory from our previous example. ```MyStruct memory readOnly = myStructs[msg.sender]```, this builds ```MyStruct``` stored at ```msg.sender``` to ```memory``` and this can also be modified ```readOnly.foo = 456```, but since the data is loaded on memory, once the function is done executing this change will not be saved.
+> use **storage** to update data and use **memory** to read the data
+- in function ```examplesMem()``` we pass inputs uint array ```uint[]``` its data location ```memory``` and its name ```y```, second input is ```string memory s```, we also return a dynamic datatype ```returns(uint[] memory)```
+- we initialize an array uint which will be loaded in memory called ```memArr``` by typing ```uint[] memory memArr = new uint[](3)```. The memArr has 3 elements since it has a fixed size of 3.
+> for arrays that are intialized in memory, we can only create fixed sized arrays. Note that we cannot create a dynamic array.
+- calldata can be used for function inputs in place of memory because it has the potential to save gas. in the function ```examplesCalldata(uint[] calldata y, string calldata s)```, the datatype declared as calldata is non-modifiable, meaning we cannot change the values inside it. Hence saving gas when we pass this input into another function.
+- we decalre another function called ```_internal()``` taking the ```uint[] calldata y``` as input from the ```examplesCalldata()```functions input, taking the input y and passing it into the _internal function.
+- if we had used ```uint[] memory y```, it would take input y, and when it passes on to the function ```_internal(y)```, then would copy each element from the uint[] to a new uint[] inside the memory and then pass it on the function, when we use ```calldata``` then there is one less copying to do, saving us gas.
+> Summary: Use ```storage``` for dynamic data that has to be updated, ```memory``` for reading or modifying the data without saving it to the blockchain and ```calldata``` for function inputs to save gas.
