@@ -125,5 +125,9 @@ contract SimpleStorage {
 
 ```
 - to avoid name collision between input and state-variable we use underscore ```_name```
+- since ```name``` is a public state variable we don't necessarily have to create a getter function, however it is best practice to create a getter function to return a dynamic data type.
 
 Check Opcodes and its corresponding gas costs for the EVM [here](https://ethereum.org/en/developers/docs/evm/opcodes/)
+
+## :star: ToDo App
+
