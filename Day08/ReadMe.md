@@ -124,5 +124,6 @@ contract SimpleStorage {
 }
 
 ```
+- to avoid name collision between input and state-variable we use underscore ```_name```
 
 Check Opcodes and its corresponding gas costs for the EVM [here](https://ethereum.org/en/developers/docs/evm/opcodes/)
