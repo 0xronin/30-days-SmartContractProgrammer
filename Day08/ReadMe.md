@@ -105,3 +105,24 @@ contract DataLocations {
 - we decalre another function called ```_internal()``` taking the ```uint[] calldata y``` as input from the ```examplesCalldata()```functions input, taking the input y and passing it into the _internal function.
 - if we had used ```uint[] memory y```, it would take input y, and when it passes on to the function ```_internal(y)```, then would copy each element from the uint[] to a new uint[] inside the memory and then pass it on the function, when we use ```calldata``` then there is one less copying to do, saving us gas.
 > Summary: Use ```storage``` for dynamic data that has to be updated, ```memory``` for reading or modifying the data without saving it to the blockchain and ```calldata``` for function inputs to save gas.
+
+## ⭐ Simple Storage App
+
+Here we create a simple app using the concept of data location that sets a string and gets a string.
+
+```solidity
+contract SimpleStorage {
+  string public name;
+  // using calldata instead of memory saves gas
+  function setName(string calldata _name) external {
+    name = _name;
+  }
+  
+  function getName() external view returns(string memory) {
+    return name;
+  }
+}
+
+```
+
+Check Opcodes and its corresponding gas costs for the EVM [here](https://ethereum.org/en/developers/docs/evm/opcodes/)
