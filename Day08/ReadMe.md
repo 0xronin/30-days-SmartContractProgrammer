@@ -91,6 +91,8 @@ contract DataLocations {
 
 }
 ```
+ 
+> Things to know about scope and visiblity - Private: function can only be called by the main contract. - Internal: function can only be called by the main or derived contract. - External: function can only be called by a third party. It cant be called by main or derived contracts. - Public: function can be called by anyone and anywhere.
 
 - here we a struct called ```MyStruct``` and a mapping from address to struct called ```myStructs```
 - we created and inserted ```myStruct[msg.sender] = MyStruct({foo: 123, text:"bar"})``` into mapping
