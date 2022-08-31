@@ -10,7 +10,7 @@ pragma solidity ^0.8.7;
 @ withdraw function: withdraws the balance from the address
 @ setUserDetails function: sets and also update details of the user 
 @ getUserDetails function: retrieves user details 
-@ getBalanceOfContract function: gets the balance in ETH
+@ getBalanceOfContract function: gets the balance in Contract
 @ withdrawContractBalance function: withdraws the balance in contract to Contract Owners' addresss
 */
 
