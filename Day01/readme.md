@@ -151,5 +151,16 @@ contract Contract {
 	}
 ]
 ```
+This ABI describes a public view function that returns a uint256 called myNum. This would be roughly the same as creating our own getter function
+
+```solidity 
+contract Contract {
+	uint _myNum;
+	
+	function myNum() public view returns(uint) {
+	    return _myNum;
+	}
+}
+```
 
 <div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day02">Day 2 >></a></div>
