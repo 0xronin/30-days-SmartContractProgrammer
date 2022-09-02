@@ -124,6 +124,7 @@ contract FunctionIntro {
 
 - ```(input_datatype input_name, input_datatype input_name, ...)``` The function contains the input datatype and the name of the input inside the paranthesis.
 - ```external``` when we deploy the contract we will be able to call this function.
+> External visibility is quite similar to the public visibility for functions. External is better than public if you know that you are only calling the function externally (outside the EVM). Public visibility requires more gas because it can be called externally and internally, which complicates the assembly code
 - ```pure``` means this function is read only, it does not write anything to the blockchain.
 - ```returns()``` declares the type of output returned which is written inside the paranthesis.
 
