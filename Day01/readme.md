@@ -59,6 +59,7 @@ contract HelloWorld {
 
 - ```string``` is the data-type.
 - ```public``` tells we have read-access to this variable after we deploy the smart contract.
+>When using public on a state variable a getter is automatically created for us with a function of the same name.
 - ```greeting``` is the name of the variable.
 
 Once the contract is deployed, the variable ```greeting``` will be stored on the blockchain.
@@ -125,5 +126,29 @@ contract FunctionIntro {
 - ```external``` when we deploy the contract we will be able to call this function.
 - ```pure``` means this function is read only, it does not write anything to the blockchain.
 - ```returns()``` declares the type of output returned which is written inside the paranthesis.
+
+> Extra Knowledge: 
+The ABI for a contract with a public uint would be: 
+```solidity
+contract Contract {
+	uint public myNum;
+}
+// ABI
+[
+	{
+		"inputs": [],
+		"name": "myNum",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+```
 
 <div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day02">Day 2 >></a></div>
