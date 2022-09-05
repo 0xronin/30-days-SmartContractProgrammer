@@ -106,6 +106,9 @@ contract ViewAndPureFunctions {
 - view function doesn't modify any state variables or write anything to the blockchain, making it a ```read-only``` function reading state variables, local and global variable.
 - pure function is a ```read-only``` function, it can read only local variables, it does not modify anything on the blockchain. And also ```does not read``` any data from the blockchain such as a state variable or any information from the blockchain.
 
+> - View Functions: Functions can be declared view in which case they promise not to modify the state.
+> - Pure Functions: Functions can be declared pure in which case they promise not to read from or modify the state.
+
 
 ### :star: Simple Counter Dapp
 This smart contract increments and decrements count;
