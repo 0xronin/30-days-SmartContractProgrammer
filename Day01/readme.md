@@ -96,6 +96,7 @@ contract ValueTypes {
 - ```int``` integers stored negative, zero and positive numbers.
 - ```min/max value``` finds what the minimum or maximum value of a datatype is.
 - ```address``` is used to store the value of any address.
+> an address on the EVM is a 160 bits long, or a 40 character, hexadecimal string
 - ```bytes32``` this data type is used when working with the hash function ```keccak256```
 
 
