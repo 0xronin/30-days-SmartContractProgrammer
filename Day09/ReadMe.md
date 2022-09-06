@@ -1,4 +1,33 @@
 # Day 9️⃣
+
+## Event 
+Events allow you to write data on the blockchain, this data can later not be retrieved by smart contract. The main purpose of Event is to log that something happened. It can be a cheap alternative to storing a data as state variable.
+
+ The event is declared by the keyword ```event``` and is logged to the blockchain by wtiting the keyword ```emit```.
+ 
+ If we want to search for a particular event by the paramater that was logged, then we use the keyword ```indexed```. Please Note that only upto 3 parameters can be indexed.
+ 
+```solidity 
+contract Event {
+    event Log(string message, uint val);
+    event IndexedLog(adress indexed sender, uint val);
+    
+    function example() exteranal {
+        emit Log("foo", 1234);
+        emit IndexedLog(msg.sender, 789);
+    }
+    
+    // Building a chat app
+    event Message(address indexed _from, address indexed _to, string message);
+    
+    function sendMessage(address to, string calldata message) external {
+        emit Message(msg.sender, to, message);
+    }
+}
+```
+## Inheritance
+
+
 --
 ## Creating ERC20 Token 
 
