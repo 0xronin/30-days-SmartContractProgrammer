@@ -61,7 +61,166 @@ contract C is B {
     }
 }
 ```
+### Multiple Inheritance
+When a contract inherits from multiple contracts, then the order of inheritance is important, which is from most base-like to derieved.
 
+The most base-like contract is the contract that inherits the least.
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+// Order of inheritance - most base-like to derieved
+/*
+   X
+ / |  
+Y  |
+ \ |
+   Z
+// order of most base like to derieved
+// X, Y, Z
+ 
+   X
+  / \
+ Y   A
+ |   |
+ |   B
+  \ /
+   Z
+   
+// order of most base like to derieved
+// X, Y, A, B, Z
+*/
+
+// We take X, Y and Z example
+
+contract X {
+    function foo() public pure virtual returns(string memory) {
+        return "X";
+    }
+    function bar() public pure virtual returns(string memory) {
+        return "Y";
+    }
+    function x() public pure returns(string memory) {
+        return "X";
+    }
+}
+
+contract Y is X {
+    function foo() public pure virtual override returns(string memory) {
+        return "Y";
+    }
+    function bar() public pure virtual override returns(string memory) {
+        return "Y";
+    }
+    function y() public pure returns(string memory) {
+        return "Y";
+    }
+}
+
+contract Z is X, Y { // be careful to not switch the order of most base-like to most derieved otherwise 
+// this contract will not compile
+    funciton foo() public pure override(X, Y) returns(string memory) {
+        return "Z";
+    }
+    funciton bar() public pure override(X, Y) returns(string memory) {
+        return "Z";
+    }
+}
+
+
+   
+```
+In the example above X inherits Y, and Z inherits both Y and X.
+
+### Calling Parent Constructors
+When a contract inherits from Parent contracts how do we call the constructor of the parents?
+
+In the example below, we have a contract S and the constructor takes in an input of string called ```_name```,
+And we also have a contract T and it's constructor takes in an input of string called ```_text```,
+And finally we have contract U, which inherits from both S and T.
+
+```solidity
+contract S {
+    string public name;
+    
+    constructor(string memory _name) {
+        name = _name;
+    }
+}
+
+contract T {
+    string public text;
+    
+    constructor(string memory _text) {
+        text = _text;
+    }
+}
+
+contract U is S("s"), T("t") {
+
+}
+
+contract V is S, T {
+    constructor(string memory _name, string memory _text) S(_name) T(_text) {
+    }
+}
+
+contract VV is S("s"), T {
+    constructor(string memory _text) T(_text) {
+    }
+}
+
+// Order of execution 
+// 1. S
+// 2. T
+// 3. V0
+contract V0 is S, T {
+    constructor(string memory _name, string memory _text) S(_text) T(_name) {
+    }
+}
+
+// Order of execution
+// 1. S
+// 2. T
+// 3. V1
+
+contract V1 is S, T {
+    constructor(string memory _name, string memory _text) T(_text) S(_name) {
+    }
+}
+
+// Order of execution
+// 1. T
+// 2. S
+// 3. V2
+contract V2 is T, S {
+    constructor(string memory _name, string memory _text) S(_name) T(_text) {
+    }
+}
+
+// Order of execution
+// 1. T
+// 2. S
+// 3. V3
+contract V3 is T, S {
+    constructor(string memory _name, string memory _text) T(_text) S(_name) {
+    }
+}
+
+```
+- There are two ways to call the parent constructor, and there is also an order in which the parent constructor is called.
+
+Initializing the Parent Constructor
+1. If you know the parameters to pass to the parent constructor, when writing the code then you can pass the parameters directly, i.e. ```static inputs```. See ```contract U```.
+2. If you want to pass dynamic inputs to the constructor parameters that are to be determined when you deploy the constract, i.e., ```dynamic inputs```. See ```contract V```. 
+The calling can alse be a combination of both, see ```contract VV```
+
+### Order of Initialization of Parent Contract
+The Order of initialization of parent contract is not determined by the order of parent contracts that are called in the constructor, it is determined by the ```order of inheritance```, i.e., from most base-like to most derieved. See ```contract V0```, ```contract V1```, ```contract V2``` and ```contract V3```.
+
+### Calling Parent Funcitons
+We can call parent functions directly or using the keyword ```super```. 
 
 ## EXTRA LEARNING!
 ### Creating ERC20 Token 
@@ -79,9 +238,7 @@ contract MiniEth is ERC20 {
         _mint(msg.sender, initial_supply);
     }
 }
-
 ```
-
 > supply: All operations in the smart contract use the token base units, so to create a total supply 100 tokens you input 100 * 10 ** 18 token base units.
 
 ### Mintable ERC20 token Contract
