@@ -77,8 +77,11 @@ Suppose we want to intialize a state-variable when a contract is deployed, and o
 
 ```solidity
 contract Immutable {
-  address public immutable owner = msg.sender;
+  address public immutable owner;
   
+  constructor() {
+   owner = msg.sender;
+  }
   // without immutable gas: 45718
   // with immutable gas: 43585
   
@@ -90,14 +93,35 @@ contract Immutable {
   
 }
 ```
-Immutable variables can only be initialized when the contract is deployed and here we won't be to change the ```owner``` later on after deployment of contract.
+- Immutable variables can only be initialized when the contract is deployed and here we won't be to change the ```owner``` later on after deployment of contract.
+- Immutable variables are like constants, except that you can initialize it only once when the contract is deployed.
 
+### Payable
+The payable keyword adds functionality to send and receive Ether.
 
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
 
+contract Payable {
+    address payable public owner;
+    
+    constructor() {
+     owner = payable(msg.sender); // we need to cast msg.sender as payable address because 
+     // owner has been declared as a payable address
+    }
+    
+    function deposit() external payable {}
+    
+    // helper function to get balance
+    function getBalance() external view returns(uint) {
+        return address(this).balance;
+    }
+}
+```
+If we omit the keyword payable from deposit function, then it will no longer be able to receive ether.
 
-
-
-
+###
 
 
 
