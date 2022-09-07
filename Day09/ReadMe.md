@@ -27,9 +27,44 @@ contract Event {
 ```
 ## Inheritance
 
+Inheritance is used when we want to use the code/functionality from one contract in other contract, also allowing us to customize the functions. For a contract to inherit another contract we use the keyword ```is```, in the example code below contract B(child) is inheriting A(parent) and C is inheriting B.
 
---
-## Creating ERC20 Token 
+The functions that are to be inherited needs to be declared as ```virtual```.
+To declare that these virtual functions can be customized by the child contract are declared as ```override```.
+
+
+```solidity 
+contract A {
+    function foo() public pure virtual returns(string memory) {
+        return "A";
+    }
+    function bar() public pure virtual returns(string memory) {
+        return "A";
+    }
+    function baz() public pure returns(string memory) {
+        return "A";
+    }
+}
+
+contract B is A {
+    funciton foo() public pure override returns(string memory) {
+        return "B";
+    }
+    function bar() public pure virtual override returns(string memory) {
+        return "B";
+    }
+}
+
+contract C is B {
+    funciton bar() public pure override returns(string memory) {
+        return "C";
+    }
+}
+```
+
+
+## EXTRA LEARNING!
+### Creating ERC20 Token 
 
 ```solidity 
 
