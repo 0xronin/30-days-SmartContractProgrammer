@@ -281,3 +281,5 @@ Here in contract H, the function foo() is direcly calling the parent functions, 
 - In contract H, when we call the function foo, it will call F.foo() only. F.foo() will emit the event "F.foo" and will call E.foo() which will emit the event "E.foo"
 - If we call the function bar on contract H, it is going to call super.bar. The parents of the contract H is both F and G. So this function will call G.bar() and also F.bar(), both of these functions again call super.bar, in which case the parent of G is E and F is also E, so lastly it's going to call function bar() on contract E.
 
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day08"><< Day 8
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day10"> Day 10 >></div>
