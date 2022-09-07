@@ -222,6 +222,65 @@ The Order of initialization of parent contract is not determined by the order of
 ### Calling Parent Funcitons
 We can call parent functions directly or using the keyword ```super```. 
 
+We will use the following inheritance graph as example. E is the base contract, F and G inherits from E and H inherits from F and G.
+```solidity
+/*
+    E
+  /   \
+ F     G
+  \   /
+    H
+*/
+
+contract E {
+    event Log(string message);
+    
+    function foo() public virtual {
+        emit Log("E.foo");
+    }
+    
+    function bar() public virtual {
+        emit Log("E.bar");
+    }
+}
+
+contract F is E {
+    function foo() public virtual override {
+        emit Log("F.foo"); 
+        E.foo(); // called directly
+    }
+    
+    function bar() public virtual override {
+        emit Log("F.bar");
+        super.bar(); // called using keyword super
+    }
+}
+
+contract G is E {
+    function foo() public virtual override {
+        emit Log("G.foo");
+        E.Foo();
+    }
+    function bar() public virtual override {
+        emit Log("G.bar");
+        super.bar();
+    }
+}
+
+contract H is F, G {
+    function foo() public override(F, G) {
+        F.foo(); // called directly
+    }
+    
+    function bar() public override(F, G) {
+        super.bar(); // called using keyword super
+    }
+}
+```
+Here in contract H, the function foo() is direcly calling the parent functions, and function bar() is calling the parent functions using ```super```.
+- In contract H, when we call the function foo, it will call F.foo() only. F.foo() will emit the event "F.foo" and will call E.foo() which will emit the event "E.foo"
+- If we call the function bar on contract H, it is going to call super.bar. The parents of the contract H is both F and G. So this function will call G.bar() and also F.bar(), both of these functions again call super.bar, in which case the parent of G is E and F is also E, so lastly it's going to call function bar() on contract E.
+
 ## EXTRA LEARNING!
 ### Creating ERC20 Token 
 
