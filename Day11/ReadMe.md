@@ -1,4 +1,4 @@
-## Day :one::one:
+# Day :one::one:
 ## Call Other Contracts
 Here in the example below we are going to call functions from the ```TestContract``` from inside the ```CallTestContract```.
 For the inputs in the function, we pass in the address of the contract we are calling, along with other input if present.
