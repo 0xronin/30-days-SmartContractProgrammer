@@ -1,3 +1,4 @@
+# Day :one::zero:
 ## Visibility
 
 Visibility defines how contract or other contracts have access to state varaibles and functions.
