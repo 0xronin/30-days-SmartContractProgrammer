@@ -220,15 +220,5 @@ Gas Optimization:
 - one of the ways to optimize for gas is to replace the state variables inside memory. owner is a state variable which can be replaced with msg.sender.
 - we can use ```call``` instead of transfer to send ether.
 
-
-
-
-
-
-
-
-
-
-
-
-
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day09"><< Day 9
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day11"> Day 11 >></div>
