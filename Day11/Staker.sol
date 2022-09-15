@@ -46,6 +46,7 @@ contract Staker {
     /* @notice - only allowed during the staking period
     */
     function stake() public payable stakingDeadLineReached(false) {
+        require(msg.value > 0, "Send some ETH to stake");
         balances[msg.sender] += msg.value;
         stakeTimestamp[msg.sender] = block.timestamp;
         emit Stake(msg.sender, msg.value);
