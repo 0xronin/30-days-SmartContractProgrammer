@@ -71,10 +71,33 @@ There are two ways to create a contract from another contract.
 1. Create 
 2. Create2
 
+here we are using Create
 
+```solidity 
+contract Account {
+    address public bank;
+    address public owner;
+    
+    constructor(address _owner) payable {
+        bank = msg.sender;
+        owner = _owner;
+    }
+}
 
-
-
+contract AccountFactory {
+    Account[] public accounts;
+    
+    function createAccount(address _owner) external payable {
+        Account account = new Account{value: 111}(_owner); // transfering 111 wei while creating a new Account
+        accounts.push(account);
+    }
+}
+```
+- here we are deploying contract ```Account``` from another contract ```AccountFactory``` using the function ```createAccount```, the input of this function will be address ```_owner``` which is passed in as the constructor input of the ```Account``` contract at the time of deployment.
+- to deploy another contract from within a contract we use the keyword ```new``` followed by the name of the contract we are deploying. Inside the paranthesis we pass in the inputs to pass to the constructor.
+- to assign this newly deployed Account contract as a variable, here we type ```Account account = new Acc...```.
+- we create an array of accounts to store the contracts that we deploy, ```Account[] public accounts```.
+- after we deploy the contract, we push the account in the Account[] array by typing ```accounts.push(account)```.
 
 
 
