@@ -28,7 +28,7 @@ A --> B --> C
 - delegate call preserves the context, that is why when B delegate calls C, the msg.sender remains A, and msg.value = 100.
 - the ether balance of C will be the ETH in B.
 
-```
+```solidity
 contract Test DelegateCall {
   uint public num;
   address public sender;
@@ -47,14 +47,18 @@ contract DelegateCall {
   uint public value;
   
   function setVars(address _test, uint _num) external payable {
-    // (bool success, bytes memory data) = _test.delegatecall(abi.encodeWithSignature("setVars(uint256)", _num));
+    // (bool success, bytes memory data) = _test.delegatecall(
+    abi.encodeWithSignature("setVars(uint256)", _num)
+    );
     // require(success, "call failed");
     
-    (bool success, bytes memory data) = _test.delegatecall(abi.ecodeWithSelector(TestDelegateCall.setVars.selector, _num));
+    (bool success, bytes memory data) = _test.delegatecall(
+    abi.ecodeWithSelector(TestDelegateCall.setVars.selector, _num)
+    );
     require(success, "delegatecall failed");
   }
 }
-
+```
 
 
 
