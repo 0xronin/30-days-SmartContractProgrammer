@@ -88,8 +88,7 @@ contract Staker {
         }
     }
 
-    function drain() public payable {
-        require(block.timestamp > claimPeriod, "Cannot witdraw before Locking");
+    function drain() public payable claimDeadlineReached(true){
         require(msg.sender == owner, "Not the owner");
         owner.transfer(address(this).balance);
     }
