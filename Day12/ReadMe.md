@@ -66,6 +66,10 @@ contract DelegateCall {
 - we can update the logic of the contract that gets called, even though we cannot change any of the code in the contract that makes the delegatecall.
 - please keep in mind, when using the delegatecall to update the logic, all of the state variables have to be the same and must be in the same order.
 
+## New 
+There are two ways to create a contract from another contract.
+1. Create 
+2. Create2
 
 
 
