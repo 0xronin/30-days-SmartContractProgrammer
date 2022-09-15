@@ -29,13 +29,16 @@ A --> B --> C
 - the ether balance of C will be the ETH in B.
 
 ```solidity
-contract Test DelegateCall {
+contract TestDelegateCall {
+  // address public owner; // it will cause unexpected results
   uint public num;
   address public sender;
   uint public value;
+  address public owner; // if we add a new state variable here, it will work as expected
   
   function setVars(uint _num) external payable {
-    num = _num;
+    // num = _num;
+    num = 2 * _num;
     sender = msg.sender;
     value = msg.value;
   }
@@ -59,7 +62,9 @@ contract DelegateCall {
   }
 }
 ```
-
+- the state variables of the contract that is called ```TestDelegateCall`` will not be updated, instead the state variables of the contract that called gets updates. Here it will be ```DelegateCall`` contract's variables.
+- we can update the logic of the contract that gets called, even though we cannot change any of the code in the contract that makes the delegatecall.
+- please keep in mind, when using the delegatecall to update the logic, all of the state variables have to be the same and must be in the same order.
 
 
 
