@@ -142,7 +142,7 @@ contract Call {
     bytes public data;
     
     function callFoo(address _test) external payable {
-        (bool successs, bytes memory _data) = _test.call{value: 111 /*gas: 500*/ }(abi.encodeWithSignature( 
+        (bool successs, bytes memory _data) = _test.call{value: 111 /*gas: 5000*/ }(abi.encodeWithSignature( 
             "foo(string,uint256)", "my message", 123
         ));
         require(success, "failed to call");
