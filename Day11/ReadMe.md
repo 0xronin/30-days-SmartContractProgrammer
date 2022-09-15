@@ -153,8 +153,8 @@ contract Call {
     // since the TestCall contract has a fallback function so it will be executed and emit the Log() event
     
     function callDoesNotExist(address _test) external {
-        (bool success, ) = _test.call(abi.ecodeWithSignature("functionDoesNotExist()"));
-        require(success, ""falied to call);
+        (bool success, ) = _test.call(abi.ecodeWithSignature("doesNotExist()"));
+        require(success, "falied to call");
     }
     
 }
