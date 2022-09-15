@@ -167,11 +167,5 @@ contract Call {
 - when we are using ```call``` to call functions, we can specify the gas we are going to be sending and also the amount of ether we are going to be sending. ```call{value: 111 gas: 5000}```
 - using call, we can also call functions that do not exist. Keep in mind the contract we are calling this non-existent function from must have a fallback function to execute.
 
-
-
-
-
-
-
-
-
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day10"><< Day 10
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day12"> Day 12 >></div>
