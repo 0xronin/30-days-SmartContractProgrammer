@@ -99,15 +99,61 @@ contract AccountFactory {
 - we create an array of accounts to store the contracts that we deploy, ```Account[] public accounts```.
 - after we deploy the contract, we push the account in the Account[] array by typing ```accounts.push(account)```.
 
+## Library
+Library allows us to seperate and reuse code, it also allows us to enhance data types.
 
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
 
+library Math {
+    function max(uint x, uint y) internal view returns(uint) {
+        return x >= y ? x : y;
+    }
+}
 
+contract Test {
+    function testMax(uint x, uint y) external view returns(uint) {
+        return Math.max(x, y);            
+    }
+}
 
+contract 
 
+```
+- we create a library ```Math``` and use it inside the function ```testMax```
+- libraries do not have state-variables, if we make the library public than we have to deploy the library seperately from the contract.
+-```Math.max(inputs)``` is how we use library in a different contract 
 
+### Using library with State variables
+Here we are also enchancing a data type
 
+```solidity
 
+library ArrayLib {
+    function find(uint[] storage, uint x) internal view returns(uint) {
+        for(uint i = 0; i<arr.length; i++) {
+            if(arr[i] == x) {
+                return i;
+            }
+        } revert("not found");
+    }
+}
 
+contract TestArray {
+    using ArrayLib for uint[];
+    uint[] public arr = [1,2,3];
+    
+    function testFind() external view returns(uint i) {
+        // return ArrayLib.find(arr, 2);
+        return arr.find(2);
+    }
+}
+```
+- since we are calling the function ```find``` in library on the state-variable ```arr```, its data location is storage. 
+- ```using ArrayLib for uint[]``` means that for data type uint[] (array of uint), attach all the functionalities defined inside the library ```ArrayLib```, so by declaring the library that we are ```using```,  ```for``` a data type, we can enhance the data type and call the function on the data type.
+
+## Keccak256 Hash function
 
 
 
