@@ -2,7 +2,7 @@
 pragma solidity ^0.8.7;
 
 contract Staker {
-    // balances
+    // mappings
     mapping(address => uint) public balances;
     mapping(address => uint) public stakeTimestamp;
 
