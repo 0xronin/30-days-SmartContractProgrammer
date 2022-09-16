@@ -193,7 +193,7 @@ contract HashFunc() {
 > Hash collision: The output of the hash is same, even though the inputs are different. This happens when two dynamic data types are passed next to each other inside the function encodePacked.
 - to avoid collision, we can use ```encode``` instead of encodePacked, alternatively if we have other inputs in the hash function we can rearrange the inputs so that no two dynamic data types are next to each other.
 
-## Verify Signature (FUN!)
+## Verify Signature
 The process of verifying a signature in solidity is in 4 steps:
 1. message to sign
 2. hash (message)
@@ -255,6 +255,64 @@ contract VerifySign {
 - ```_sig``` is a dynamic data, this is because it has a variable length, and for dynamic data type the first 32 bytes stores the length of the data. The variable _sig is not the actual signature, it is a pointer to where the signature is stored in memory.
 - we get the value of r by typing ```r``` assigned to ```mload```, this will load to memory 32 bytes from the pointer that we provide in this input, the first 32 bytes of the _sig is the length of the _sig and we need to skip it by typing ```add(_sig, 32)```, here we are saying that from the pointer of _sig, skip the first 32 bytes because it holds the length of the array, after we skip the first 32 bytes the value for ```r``` is stored in the next 32 bytes. 
 - similarly, we get the value for s and v. Note that for the value of v we dont need 32 bytes so we get only the 1st byte after s by typing ```byte(0, mload(add(_sig, 96)))```. The value of r, s and v are implicitly-returned.
+
+## :star: Access Control App
+A Smart Contract for making contract Deployer as ADMIN. ADMIN can further grant or revoke roles to other accounts.
+
+```solidity 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+contract AccessControl {
+    event GrantRole(bytes32 indexed role, address indexed account);
+    event RevokeRole(bytes32 indexed role, address indexed account);
+    
+    // role => account => bool
+    mapping (bytes32 => mapping(address => bool)) public roles;
+    
+    bytes32 private constant ADMIN = keccak256(abi.encodePacked("ADMIN"));
+    bytes32 private constant USER = keccak256(abi.encodePacked("USER"));
+    
+    modifier onlyRole(bytes _role) {
+        require(roles[_role][msg.sender], "not authorized");
+        _;
+    }
+    
+    constructor() {
+        _grantRole(ADMIN, msg.sender);
+    }
+    
+    function _grantRole(bytes32 _role, address _account) internal {
+        roles[_role][_account] = true;
+        emit GrantRole(_role, _account);
+    }
+    
+    function grantRole(bytes32 _role, address _account) external onlyRole(ADMIN) {
+        _grantRole(_role, _account);
+    }
+    
+    function revokeRole(bytes32 _rolem, address _account) external onlyRole(ADMIN) {
+        roles[_role][_account] = false;
+        emit RevokeRole(_role, _account);
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
