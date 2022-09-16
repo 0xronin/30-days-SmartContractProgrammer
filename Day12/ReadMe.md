@@ -193,3 +193,71 @@ contract HashFunc() {
 > Hash collision: The output of the hash is same, even though the inputs are different. This happens when two dynamic data types are passed next to each other inside the function encodePacked.
 - to avoid collision, we can use ```encode``` instead of encodePacked, alternatively if we have other inputs in the hash function we can rearrange the inputs so that no two dynamic data types are next to each other.
 
+## Verify Signature (FUN!)
+The process of verifying a signature in solidity is in 4 steps:
+1. message to sign
+2. hash (message)
+3. sign(hash(message), private key) | done offchain using wallet
+4. ecrecover(hash(message), signature) == signer
+
+We create a function called Verify, which will take in a message, signature and a signer, and verify that the signature is valid.
+
+```solidity
+contract VerifySign {
+    function verify(address _signer, string memory _message, bytes memory _sig)
+            external pure returns(bool)
+        {
+            bytes32 messageHash = getMessageHash(_message);
+            bytes32 ethSignedMessageHash = getEthSignedMessageHash(messageHash);
+            
+            return recover(ethSignedMessageHash, _sig) == _signer;
+        }
+        
+        function getMessageHash(string memory _message) public pure returns(bytes32) {
+            return keccak256(abi.encodePacked(_message));
+        }
+        
+        function getEthSignedMessageHash(bytes32 _messageHash) public pure returns(bytes32) {
+            return keccak256(abi.encodePacked(
+            "\x19Ethereum Signed Message:\n32",
+            _messageHash
+            ));
+        }
+        
+        function recover(bytes32 _ethSignedMessageHash, bytes memory _sig) 
+            public pure returns(address) 
+        {
+            (bytes32 r, bytes32 s, uint8 v) = _split(_sig);
+            return ecrecover(_ethSignedMessageHash, v, r, s);
+        }
+        
+        function _split(bytes memory _sig) internal pure
+            returns(bytes32 r, bytes32 s, uint8 v)
+        {
+            require(_sig.length == 65, "invalid signature length");
+            
+            assembly {
+                r := mload(add(_sig, 32))
+                s := mload(add(_sig, 64))
+                v := byte(0, mload(add(_sig, 96)))
+            }
+        }
+
+}
+```
+- when we sign the message off-chain, the message that is signed is not messageHash, it is ethSignedMessageHash.
+- in the recover fucntion, we take ethSignedMessageHash verify it with _sig, this will recover the signer, so we will check whether the signer that was returned is equal to the signer from input.
+- when we sign the messageHash, this hash will be prefixed with some strings ```"\x19Ethereum Signed Message:\n32"```and hashed again, that would be the actual message that is signed off-chain.
+- we split the signature into 3 parts ```(bytes32 r, bytes32 s, uint8 v)```, the ```r``` and ```s``` are cryptographic parameters used for digital signatures and parameter v is recovery identifier variable. We pass these parameters to the function ```ecrecover```, which returns the address of the signed giving the signed message, v, r and s as inputs.
+- we create the ```split``` function to split the signature into the three parameters v, r and s.
+- we do a check on the signature to make sure it is valid, by checking the signature length to be equal to 65. Since bytes32 r is of 32 length, bytes32 s is of 32 length, and uint8 v is of 1 length.
+- we get the parameters r, s, v from the signature _sig, by using ```assembly```
+- ```_sig``` is a dynamic data, this is because it has a variable length, and for dynamic data type the first 32 bytes stores the length of the data. The variable _sig is not the actual signature, it is a pointer to where the signature is stored in memory.
+- we get the value of r by typing ```r``` assigned to ```mload```, this will load to memory 32 bytes from the pointer that we provide in this input, the first 32 bytes of the _sig is the length of the _sig and we need to skip it by typing ```add(_sig, 32)```, here we are saying that from the pointer of _sig, skip the first 32 bytes because it holds the length of the array, after we skip the first 32 bytes the value for ```r``` is stored in the next 32 bytes. 
+- similarly, we get the value for s and v. Note that for the value of v we dont need 32 bytes so we get only the 1st byte after s by typing ```byte(0, mload(add(_sig, 96)))```. The value of r, s and v are implicitly-returned.
+
+
+
+
+
+
