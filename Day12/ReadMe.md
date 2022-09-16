@@ -300,25 +300,5 @@ contract AccessControl {
     }
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div align=center><a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day11"><< Day 11
+<a href="https://github.com/0xronin/30-days-SmartContractProgrammer/tree/main/Day13"> Day 13 >></div>
