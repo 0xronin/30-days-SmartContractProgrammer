@@ -154,9 +154,42 @@ contract TestArray {
 - ```using ArrayLib for uint[]``` means that for data type uint[] (array of uint), attach all the functionalities defined inside the library ```ArrayLib```, so by declaring the library that we are ```using```,  ```for``` a data type, we can enhance the data type and call the function on the data type.
 
 ## Keccak256 Hash function
+Keccak256 is a cryptographic hash function that is wildly used in Solidity. Uses cases are to sign a signature, unique ID, and can be used to create a contract that is protected from front-running(Commit-Reveal Scheme).
 
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
 
-
-
-
+contract HashFunc() {
+    function hash(string memory text, uint num, address addr) external pure returns(bytes32) {
+        return keccak256(abi.encodePacked(text, num, addr));
+    }
+    
+    function encode(string memory text0, sting memory text1) external pure returns(bytes memory) {
+        return abi.encode(text0, text1);
+    }
+    
+    function encodePacked(string memory text0, sting memory text1) external pure returns(bytes memory) {
+        return abi.encodePacked(text0, text1);
+    }
+    
+    function collision(string memory text0, string memory text1) external pure returns(bytes32) {
+        return keccak256(abi.encodePacked(text0, text1)); // for text0: "AAA", text1: "ABBB" 
+                                                          // and text0: "AAAA", text1: "BBB" 
+                                                          // the hash output will be same
+    }
+    
+    // function collision(string memory text0, string memory text1) external pure returns(bytes32) {
+    //    return keccak256(abi.encode(text0, text1));
+    // }
+    
+    function collisionFixed(string memory text0, uint x, string memory text1) external pure returns(bytes32) {
+        return keccak256(abi.encode(text0, x, text1));
+    }
+}
+```
+- ```encode``` simply encode data to bytes, while ```encodePacked``` compresses this data.
+- However, there can be a situation of hash collision while using encodePacked.
+> Hash collision: The output of the hash is same, even though the inputs are different. This happens when two dynamic data types are passed next to each other inside the function encodePacked.
+- to avoid collision, we can use ```encode``` instead of encodePacked, alternatively if we have other inputs in the hash function we can rearrange the inputs so that no two dynamic data types are next to each other.
 
