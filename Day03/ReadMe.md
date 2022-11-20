@@ -60,9 +60,8 @@ contract IfElse {
    // if(x < 10) {
    //   return 1;
    // } return 2;
+   return _x < 10 ? 1 : 2;
   }
-  
-  return _x < 10 ? 1 : 2; 
 
 }
 
