@@ -56,13 +56,13 @@ contract DelegateCall {
     // require(success, "call failed");
     
     (bool success, bytes memory data) = _test.delegatecall(
-    abi.ecodeWithSelector(TestDelegateCall.setVars.selector, _num)
+    abi.encodeWithSelector(TestDelegateCall.setVars.selector, _num)
     );
     require(success, "delegatecall failed");
   }
 }
 ```
-- the state variables of the contract that is called ```TestDelegateCall`` will not be updated, instead the state variables of the contract that called gets updates. Here it will be ```DelegateCall`` contract's variables.
+- the state variables of the contract that is called ```TestDelegateCall``` will not be updated, instead the state variables of the contract that called gets updates. Here it will be ```DelegateCall``` contract's variables.
 - we can update the logic of the contract that gets called, even though we cannot change any of the code in the contract that makes the delegatecall.
 - please keep in mind, when using the delegatecall to update the logic, all of the state variables have to be the same and must be in the same order.
 
@@ -94,7 +94,7 @@ contract AccountFactory {
 }
 ```
 - here we are deploying contract ```Account``` from another contract ```AccountFactory``` using the function ```createAccount```, the input of this function will be address ```_owner``` which is passed in as the constructor input of the ```Account``` contract at the time of deployment.
-- to deploy another contract from within a contract we use the keyword ```new``` followed by the name of the contract we are deploying. Inside the paranthesis we pass in the inputs to pass to the constructor.
+- to deploy another contract from within a contract we use the keyword ```new``` followed by the name of the contract we are deploying. Inside the parenthesis we pass in the inputs to pass to the constructor.
 - to assign this newly deployed Account contract as a variable, here we type ```Account account = new Acc...```.
 - we create an array of accounts to store the contracts that we deploy, ```Account[] public accounts```.
 - after we deploy the contract, we push the account in the Account[] array by typing ```accounts.push(account)```.

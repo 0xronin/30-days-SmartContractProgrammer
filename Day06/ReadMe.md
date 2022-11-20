@@ -16,7 +16,7 @@ contract Array{
     uint x = nums[1]; // x = 2
     nums[2] = 777 // [1,2,777,4]
     delete nums[1]; // [1,0,777,4]
-    nums.pop(); // [1.0,777]
+    nums.pop(); // [1,0,777]
     uint len = nums.length; // 3
     
     // create array in memory
@@ -47,7 +47,7 @@ contract Array{
 
 ### Array Remove An Element By Shifting
 
-When we use th ```delete``` to clear element from an array, it does not removes the element but only resets it to it's default value.
+When we use the ```delete``` to clear element from an array, it does not removes the element but only resets it to it's default value.
 The basic idea of this method is to shift all the elements to the left and pop the last element.
 
 ```solidity
@@ -98,7 +98,7 @@ contract ArrayShift {
 - we check our algo by running the function ```test()```
 
 ### Array Remove An Element By Replacing Last
-Shifting is not an gas-efficient way to remove an element from an array, the idea here is to shuffle the elements by replacing the element we want to remove with the last element. However the order of the elements in the array is not reserved when using this menthod.
+Shifting is not an gas-efficient way to remove an element from an array, the idea here is to shuffle the elements by replacing the element we want to remove with the last element. However the order of the elements in the array is not reserved when using this method.
 
 ```solidity
 contract ArrayReplaceLast {

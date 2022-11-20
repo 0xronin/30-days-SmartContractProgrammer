@@ -152,7 +152,7 @@ contract Fallback {
 ### 3 Ways to Send Ether
 There are 3 ways in Solidity to send ether
 - transfer - 2300 gas, reverts
-- send - 2300 gas, returs bool
+- send - 2300 gas, returns bool
 - call - all gas, returns bool and data
 
 To be able to send ether from a contract, it must be able to first receive ether. One way is by having a ```payable constructor```, another is by having a ```payable fallback```. Having only the receive fuction means this contract will be able to receive ether, and if a function that is not present in this contract is called it will revert.
