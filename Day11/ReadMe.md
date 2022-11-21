@@ -4,7 +4,7 @@ Here in the example below we are going to call functions from the ```TestContrac
 For the inputs in the function, we pass in the address of the contract we are calling, along with other input if present.
 
 There are several ways to call other contracts
-1. The first way is to initialize the contract, we do that by typing the contract name and pass in the address of the contract in the input to initialize it. ```TestContract(_test)``` and the function we want to call in writter after a period ```.``` like ```TestContract(_test).setX(_x)```, this here will call the TestContract deployed at the address _test and it's going to call the function setX with the input _x.
+1. The first way is to initialize the contract, we do that by typing the contract name and pass in the address of the contract in the input to initialize it. ```TestContract(_test)``` and the function we want to call in write after a period ```.``` like ```TestContract(_test).setX(_x)```, this here will call the TestContract deployed at the address _test and it's going to call the function setX with the input _x.
 2. Another way is to pass in the contract as a type directly replacing the address keyword, for example ```setX(TestContract _test, uint _x)```
 
 
@@ -153,15 +153,15 @@ contract Call {
     // since the TestCall contract has a fallback function so it will be executed and emit the Log() event
     
     function callDoesNotExist(address _test) external {
-        (bool success, ) = _test.call(abi.ecodeWithSignature("doesNotExist()"));
+        (bool success, ) = _test.call(abi.encodeWithSignature("doesNotExist()"));
         require(success, "falied to call");
     }
     
 }
 ```
 - first we are going to call the function ```foo()```, so we create a function ```callFoo()``` in the Call contract, the input of the callFoo() function will be the addresss of the deployed TestCall contract called ```_test```. 
-- we use the low-level call function, by typing _test.call(), inside the paranthesis we need to ecode the function ```abi.ecodeWithSignature()``` we are calling followed by the inputs we are going to be passing
-- the first input for ```abi.ecodeWithSignature()``` will be the function we going to be calling which is ```foo()``` this function takes in a string and uint256 as input. ```Be careful to not put any spaces between the input inside the called function```.
+- we use the low-level call function, by typing _test.call(), inside the parenthesis we need to ecode the function ```abi.encodeWithSignature()``` we are calling followed by the inputs we are going to be passing
+- the first input for ```abi.encodeWithSignature()``` will be the function we going to be calling which is ```foo()``` this function takes in a string and uint256 as input. ```Be careful to not put any spaces between the input inside the called function```.
 - next we need to pass the inputs which is type string and type uint respectively. 
 - when we use call it is going to return two outputs, the first output will be a boolean that tells whether the call was successful or not, and the second output will be any output that was returned from calling the function foo(), and it will be in bytes.
 - when we are using ```call``` to call functions, we can specify the gas we are going to be sending and also the amount of ether we are going to be sending. ```call{value: 111 gas: 5000}```

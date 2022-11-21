@@ -74,7 +74,7 @@ contract GlobalVariables {
 
 - ```view``` is like pure, it is a read-only function. Unlike pure functions, view functions can read data from state variables and global variables.
 - ```msg.sender``` is a global variable that stores the addresss that calls this function, its datatype is address.
-- ```block.timestamp``` stores the unix timestamp of when this fucntion was called, its datatype is unit.
+- ```block.timestamp``` stores the unix timestamp of when this fucntion was called, its datatype is uint.
 - ```block.number``` stores the current [block number](https://www.youtube.com/watch?v=_160oMzblY8&t=2s), its datatype is uint.
 - ```sender, timestamp, blockNum``` are the defined Global Variables.
 

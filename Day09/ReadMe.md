@@ -10,9 +10,9 @@ Events allow you to write data on the blockchain, this data can later not be ret
 ```solidity 
 contract Event {
     event Log(string message, uint val);
-    event IndexedLog(adress indexed sender, uint val);
+    event IndexedLog(address indexed sender, uint val);
     
-    function example() exteranal {
+    function example() external {
         emit Log("foo", 1234);
         emit IndexedLog(msg.sender, 789);
     }
@@ -259,7 +259,7 @@ contract F is E {
 contract G is E {
     function foo() public virtual override {
         emit Log("G.foo");
-        E.Foo();
+        E.foo();
     }
     function bar() public virtual override {
         emit Log("G.bar");
